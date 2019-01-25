@@ -1,3 +1,6 @@
+/* global it */
+/* global describe */
+
 require('should');
 
 const zapier = require('zapier-platform-core');
@@ -28,8 +31,8 @@ describe('App.authentication.test', () => {
                 json_response.should.have.property('msg');
                 json_response.result.should.eql('success');
                 done();
-        })
-        .catch(done);
+            })
+            .catch(done);
 
     });
 });
