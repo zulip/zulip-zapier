@@ -1,3 +1,12 @@
+const testAuth = {
+    method: 'POST',
+    url: 'https://{{bundle.authData.subdomain}}.zulipchat.com/api/v1/external/zapier?api_key={{bundle.authData.api_key}}',
+    headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'ZapierZulipApp'
+    }
+};
+
 module.exports = {
     type: 'custom',
 
@@ -18,15 +27,7 @@ module.exports = {
         }
     ],
 
-    test: {
-        method: 'POST',
-        url: 'https://{{bundle.authData.subdomain}}.zulipchat.com/api/v1/external/zapier?api_key={{bundle.authData.api_key}}',
-        headers: {
-            'Content-Type': 'application/json',
-            'User-Agent': 'ZapierZulipApp'
-        },
-        json: null
-    },
+    test: testAuth,
 
     // assuming "result" is a key in the json returned from testAuth
     connectionLabel: (z, bundle) => {
