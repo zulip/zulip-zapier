@@ -4,9 +4,9 @@ const authentication = require('./authentication');
 // Include the API key on all outbound requests.
 // This function runs before each request is sent out.
 const includeApiKey = (request, z, bundle) => {
-    if (bundle.authData.apiKey) {
+    if (bundle.authData.api_key) {
         request.params = request.params || {};
-        request.params.api_key = bundle.authData.apiKey;
+        request.params.api_key = bundle.authData.api_key;
     }
     return request;
 };
