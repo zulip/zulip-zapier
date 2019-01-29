@@ -20,10 +20,10 @@ module.exports = {
         },
         {
             key: 'api_key',
-            label: 'Your Zulip API Key',
+            label: 'Your Zulip bot\'s API Key',
             required: true,
             type: 'string',
-            helpText: 'Found in Settings -> Your account.'
+            helpText: 'Found in Settings -> Your bots.'
         }
     ],
 
