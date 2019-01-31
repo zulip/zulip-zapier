@@ -17,7 +17,7 @@ describe('creates', () => {
         const bundle = {
             authData: {
                 api_key: 'secret',
-                subdomain: 'yourzulipsubdomain',
+                domain: 'yourzulipsubdomain.zulipchat.com',
             },
             inputData: {
                 stream: 'test',

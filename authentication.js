@@ -1,6 +1,6 @@
 const testAuth = {
     method: 'POST',
-    url: 'https://{{bundle.authData.subdomain}}.zulipchat.com/api/v1/external/zapier?api_key={{bundle.authData.api_key}}',
+    url: 'https://{{bundle.authData.domain}}/api/v1/external/zapier?api_key={{bundle.authData.api_key}}',
     headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'ZapierZulipApp'
@@ -12,11 +12,11 @@ module.exports = {
 
     fields: [
         {
-            key: 'subdomain',
-            label: 'Your Zulip subdomain',
+            key: 'domain',
+            label: 'Your Zulip domain',
             type: 'string',
             required: true,
-            helpText: 'Found in your browsers address bar after logging in to Zulip.'
+            helpText: 'Found in your browsers address bar after logging in to Zulip, e.g. yourzulipdomain.zulipchat.com.'
         },
         {
             key: 'api_key',
