@@ -4,7 +4,8 @@ const testAuth = {
     headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'ZapierZulipApp'
-    }
+    },
+    body: { 'type': 'auth' }
 };
 
 module.exports = {

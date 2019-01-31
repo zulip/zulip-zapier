@@ -23,7 +23,7 @@ describe('App.authentication.test', () => {
 
         // mocks the next request that matches this url and querystring
         nock('https://yourzulipsubdomain.zulipchat.com')
-            .post('/api/v1/external/zapier?api_key=secret')
+            .post('/api/v1/external/zapier?api_key=secret', { type: 'auth' })
             .reply(200, { result: 'success', msg: '' });
 
         appTester(App.authentication.test, bundle)
