@@ -34,7 +34,7 @@ module.exports = {
 
         perform: (z, bundle) => {
             const promise = z.request({
-                url: 'https://{{bundle.authData.subdomain}}.zulipchat.com/api/v1/external/zapier',
+                url: 'https://{{bundle.authData.domain}}/api/v1/external/zapier',
                 method: 'POST',
                 body: JSON.stringify({
                     type: 'stream',
