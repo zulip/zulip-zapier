@@ -1,6 +1,7 @@
 
 const authentication = require('./authentication');
 const stream_message = require('./creates/stream_message');
+const private_message = require('./creates/private_message');
 
 // Include the API key on all outbound requests.
 // This function runs before each request is sent out.
@@ -40,7 +41,8 @@ const App = {
 
     // If you want your creates to show up, you better include it here!
     creates: {
-        [stream_message.key]: stream_message
+        [stream_message.key]: stream_message,
+        [private_message.key]: private_message
     }
 };
 
