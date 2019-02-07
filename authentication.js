@@ -17,14 +17,14 @@ module.exports = {
             label: 'Your Zulip domain',
             type: 'string',
             required: true,
-            helpText: 'Found in your browsers address bar after logging in to Zulip, e.g. yourzulipdomain.zulipchat.com.'
+            helpText: 'Found in your browser\'s address bar after logging in to Zulip, e.g. yourzulipdomain.zulipchat.com.'
         },
         {
             key: 'api_key',
             label: 'Your Zulip bot\'s API Key',
             required: true,
             type: 'string',
-            helpText: 'Found in Settings -> Your bots.'
+            helpText: 'Found in Settings -> Your bots. [Learn more...](https://zulipchat.com/api/api-keys#get-a-bots-api-key)'
         }
     ],
 
