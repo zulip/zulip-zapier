@@ -17,7 +17,7 @@ describe('creates', () => {
         const bundle = {
             authData: {
                 api_key: 'secret',
-                domain: 'yourzulipsubdomain.zulipchat.com',
+                domain: 'https://yourzulipsubdomain.zulipchat.com/',
             },
             inputData: {
                 stream: 'test',
@@ -45,7 +45,7 @@ describe('creates', () => {
         const bundle = {
             authData: {
                 api_key: 'secret',
-                domain: 'yourzulipsubdomain.zulipchat.com',
+                domain: 'https://yourzulipsubdomain.zulipchat.com/',
             },
             inputData: {
                 to: ['iago@zulip.com', 'cordelia@zulip.com'],

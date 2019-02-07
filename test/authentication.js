@@ -17,7 +17,7 @@ describe('App.authentication.test', () => {
         const bundle = {
             authData: {
                 api_key: 'secret',
-                domain: 'yourzulipsubdomain.zulipchat.com',
+                domain: 'https://yourzulipsubdomain.zulipchat.com/',
             }
         };
 
