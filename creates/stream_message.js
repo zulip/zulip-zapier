@@ -20,8 +20,8 @@ module.exports = {
             },
             {
                 key: 'topic',
-                required: false,
-                type: 'text',
+                required: true,
+                type: 'string',
                 label: 'Topic',
                 helpText: 'The topic of the message.'
             },
