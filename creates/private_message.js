@@ -1,3 +1,5 @@
+const URL = require('url-parse');
+
 module.exports = {
     key: 'private_message',
 
@@ -27,6 +29,8 @@ module.exports = {
         ],
 
         perform: (z, bundle) => {
+            const parsed_domain = new URL(bundle.authData.domain);
+            bundle.authData.domain = parsed_domain.hostname;
             const promise = z.request({
                 url: 'https://{{bundle.authData.domain}}/api/v1/external/zapier',
                 method: 'POST',

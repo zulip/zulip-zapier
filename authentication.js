@@ -1,11 +1,20 @@
-const testAuth = {
-    method: 'POST',
-    url: 'https://{{bundle.authData.domain}}/api/v1/external/zapier?api_key={{bundle.authData.api_key}}',
-    headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'ZapierZulipApp'
-    },
-    body: { 'type': 'auth' }
+const URL = require('url-parse');
+
+const testAuth = (z, bundle) => {
+    const parsed_domain = new URL(bundle.authData.domain);
+    bundle.authData.domain = parsed_domain.hostname;
+    const url = 'https://{{bundle.authData.domain}}/api/v1/external/zapier?api_key={{bundle.authData.api_key}}';
+    const payload = {'type': 'auth'};
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'User-Agent': 'ZapierZulipApp'
+        },
+        body: JSON.stringify(payload)
+    };
+
+    return z.request(url, options).then((response) => JSON.parse(response.content));
 };
 
 module.exports = {
