@@ -14,7 +14,13 @@ const testAuth = (z, bundle) => {
         body: JSON.stringify(payload)
     };
 
-    return z.request(url, options).then((response) => JSON.parse(response.content));
+    return z.request(url, options).then((response) => {
+        const parsed_response = JSON.parse(response.content);
+        if (response.status !== 200) {
+            throw new Error(parsed_response.msg);
+        }
+        return parsed_response;
+    });
 };
 
 module.exports = {

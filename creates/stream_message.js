@@ -54,7 +54,13 @@ module.exports = {
                 }
             });
 
-            return promise.then((response) => JSON.parse(response.content));
+            return promise.then((response) => {
+                const parsed_response = JSON.parse(response.content);
+                if (response.status !== 200) {
+                    throw new Error(parsed_response.msg);
+                }
+                return parsed_response;
+            });
         },
 
         // In cases where Zapier needs to show an example record to the user,
