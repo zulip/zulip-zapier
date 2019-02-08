@@ -29,17 +29,17 @@ module.exports = {
     fields: [
         {
             key: 'domain',
-            label: 'Your Zulip domain',
+            label: 'Your organization\'s Zulip domain',
             type: 'string',
             required: true,
-            helpText: 'Found in your browser\'s address bar after logging in to Zulip, e.g. yourzulipdomain.zulipchat.com.'
+            helpText: 'Your domain URL is found in your browser\'s address bar after logging into Zulip, e.g. **subdomain.zulipchat.com**.'
         },
         {
             key: 'api_key',
             label: 'Your Zulip bot\'s API Key',
             required: true,
             type: 'string',
-            helpText: 'Found in Settings -> Your bots. [Learn more...](https://zulipchat.com/api/api-keys#get-a-bots-api-key)'
+            helpText: 'After [creating a Zulip bot](https://zulipchat.com/help/add-a-bot-or-integration), you can find its API key by following [these instructions](https://zulipchat.com/api/api-keys#get-a-bots-api-key).'
         }
     ],
 
