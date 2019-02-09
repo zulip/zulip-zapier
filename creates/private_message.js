@@ -23,8 +23,7 @@ module.exports = {
                 key: 'content',
                 required: true,
                 type: 'text',
-                label: 'Content',
-                helpText: 'The content of the message.'
+                label: 'Message content',
             }
         ],
 

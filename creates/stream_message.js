@@ -15,22 +15,19 @@ module.exports = {
                 key: 'stream',
                 required: true,
                 type: 'string',
-                label: 'Stream Name',
-                helpText: 'The name of the stream to which the message will be sent.'
+                label: 'Stream'
             },
             {
                 key: 'topic',
                 required: true,
                 type: 'string',
-                label: 'Topic',
-                helpText: 'The topic of the message.'
+                label: 'Topic'
             },
             {
                 key: 'content',
                 required: true,
                 type: 'text',
-                label: 'Content',
-                helpText: 'The content of the message.'
+                label: 'Message content'
             }
         ],
 
