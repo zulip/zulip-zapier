@@ -21,10 +21,16 @@ describe('App.authentication.test', () => {
             }
         };
 
+        const payload = {
+            result: 'success',
+            msg: '',
+            bot_name: 'Zulip Webhook Bot'
+        };
+
         // mocks the next request that matches this url and querystring
         nock('https://yourzulipsubdomain.zulipchat.com')
             .post('/api/v1/external/zapier?api_key=secret', { type: 'auth' })
-            .reply(200, { result: 'success', msg: '' });
+            .reply(200, payload);
 
         appTester(App.authentication.test, bundle)
             .then((json_response) => {

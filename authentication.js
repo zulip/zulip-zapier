@@ -45,8 +45,7 @@ module.exports = {
 
     test: testAuth,
 
-    // assuming "result" is a key in the json returned from testAuth
     connectionLabel: (z, bundle) => {
-        return bundle.inputData.result;
+        return bundle.inputData.bot_name;
     }
 };
