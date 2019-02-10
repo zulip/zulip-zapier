@@ -1,4 +1,4 @@
-const URL = require('url-parse');
+const sanitize_zulip_url = require('../util.js').sanitize_zulip_url;
 
 module.exports = {
     key: 'private_message',
@@ -28,8 +28,7 @@ module.exports = {
         ],
 
         perform: (z, bundle) => {
-            const parsed_domain = new URL(bundle.authData.domain);
-            bundle.authData.domain = parsed_domain.hostname;
+            sanitize_zulip_url(bundle);
             const promise = z.request({
                 url: 'https://{{bundle.authData.domain}}/api/v1/external/zapier',
                 method: 'POST',

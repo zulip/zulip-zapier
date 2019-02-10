@@ -17,7 +17,6 @@
     },
     "dependencies": {
         "nock": "^10.0.6",
-        "url-parse": "^1.4.4",
         "zapier-platform-core": "7.6.1"
     },
     "devDependencies": {

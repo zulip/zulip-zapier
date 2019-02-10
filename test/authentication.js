@@ -17,7 +17,7 @@ describe('App.authentication.test', () => {
         const bundle = {
             authData: {
                 api_key: 'secret',
-                domain: 'https://yourzulipsubdomain.zulipchat.com/',
+                domain: 'subdomain.zulipchat.com/',
             }
         };
 
@@ -28,7 +28,7 @@ describe('App.authentication.test', () => {
         };
 
         // mocks the next request that matches this url and querystring
-        nock('https://yourzulipsubdomain.zulipchat.com')
+        nock('https://subdomain.zulipchat.com')
             .post('/api/v1/external/zapier?api_key=secret', { type: 'auth' })
             .reply(200, payload);
 

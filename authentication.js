@@ -1,8 +1,7 @@
-const URL = require('url-parse');
+const sanitize_zulip_url = require('./util.js').sanitize_zulip_url;
 
 const testAuth = (z, bundle) => {
-    const parsed_domain = new URL(bundle.authData.domain);
-    bundle.authData.domain = parsed_domain.hostname;
+    sanitize_zulip_url(bundle);
     const url = 'https://{{bundle.authData.domain}}/api/v1/external/zapier?api_key={{bundle.authData.api_key}}';
     const payload = {'type': 'auth'};
     const options = {
