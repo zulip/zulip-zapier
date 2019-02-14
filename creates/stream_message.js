@@ -1,4 +1,5 @@
 const sanitize_zulip_url = require('../util.js').sanitize_zulip_url;
+const listStreams = require('./helpers.js').listStreams;
 
 module.exports = {
     key: 'stream_message',
@@ -10,12 +11,7 @@ module.exports = {
 
     operation: {
         inputFields: [
-            {
-                key: 'stream',
-                required: true,
-                type: 'string',
-                label: 'Stream'
-            },
+            listStreams,
             {
                 key: 'topic',
                 required: true,
