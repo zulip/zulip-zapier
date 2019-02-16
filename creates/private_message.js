@@ -1,4 +1,5 @@
 const sanitizeZulipURL = require('../util.js').sanitizeZulipURL;
+const listUsers = require('./helpers.js').listUsers;
 
 module.exports = {
     key: 'private_message',
@@ -11,14 +12,7 @@ module.exports = {
 
     operation: {
         inputFields: [
-            {
-                key: 'recipients',
-                required: true,
-                type: 'string',
-                label: 'Recipient(s)',
-                helpText: 'Email addresses of recipient Zulip users',
-                list: true
-            },
+            listUsers,
             {
                 key: 'content',
                 required: true,
