@@ -1,7 +1,7 @@
-const sanitize_zulip_url = require('./util.js').sanitize_zulip_url;
+const sanitizeZulipURL = require('./util.js').sanitizeZulipURL;
 
 const testAuth = (z, bundle) => {
-    sanitize_zulip_url(bundle);
+    sanitizeZulipURL(bundle);
     const url = 'https://{{bundle.authData.domain}}/api/v1/external/zapier?api_key={{bundle.authData.api_key}}';
     const payload = {'type': 'auth'};
     const options = {

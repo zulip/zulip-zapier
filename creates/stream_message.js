@@ -1,4 +1,4 @@
-const sanitize_zulip_url = require('../util.js').sanitize_zulip_url;
+const sanitizeZulipURL = require('../util.js').sanitizeZulipURL;
 
 module.exports = {
     key: 'stream_message',
@@ -31,7 +31,7 @@ module.exports = {
         ],
 
         perform: (z, bundle) => {
-            sanitize_zulip_url(bundle);
+            sanitizeZulipURL(bundle);
             const promise = z.request({
                 url: 'https://{{bundle.authData.domain}}/api/v1/external/zapier',
                 method: 'POST',

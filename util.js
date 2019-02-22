@@ -1,6 +1,6 @@
 const URL = require('url').URL;
 
-const sanitize_zulip_url = (bundle) => {
+const sanitizeZulipURL = (bundle) => {
     if (!bundle.authData.domain.match(/^[a-zA-Z]+:\/\//))
     {
         bundle.authData.domain = 'http://' + bundle.authData.domain;
@@ -10,5 +10,5 @@ const sanitize_zulip_url = (bundle) => {
 };
 
 module.exports = {
-    'sanitize_zulip_url': sanitize_zulip_url
+    'sanitizeZulipURL': sanitizeZulipURL
 };
