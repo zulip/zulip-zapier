@@ -1,24 +1,20 @@
-const sanitizeZulipURL = require('./util.js').sanitizeZulipURL;
+const zulip = require('zulip-js');
+const sanitize = require('./util.js').sanitizeZulipURL;
 
 const testAuth = (z, bundle) => {
-    sanitizeZulipURL(bundle);
-    const url = 'https://{{bundle.authData.domain}}/api/v1/external/zapier?api_key={{bundle.authData.api_key}}';
-    const payload = {'type': 'auth'};
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'User-Agent': 'ZapierZulipApp'
-        },
-        body: JSON.stringify(payload)
+    const config = {
+        realm: sanitize(bundle.authData.domain),
+        username: bundle.authData.username,
+        apiKey: bundle.authData.api_key
     };
 
-    return z.request(url, options).then((response) => {
-        const parsed_response = JSON.parse(response.content);
-        if (response.status !== 200) {
-            throw new Error(parsed_response.msg);
-        }
-        return parsed_response;
+    return zulip(config).then((client) => {
+        return client.users.me.getProfile().then((response) => {
+            if (response.result !== 'success') {
+                throw new Error(response.msg);
+            }
+            return response;
+        });
     });
 };
 
@@ -34,6 +30,13 @@ module.exports = {
             helpText: 'It may look like subdomain.zulipchat.com, or zulip.your-company.com.'
         },
         {
+            key: 'username',
+            label: 'Bot username',
+            type: 'string',
+            required: true,
+            helpText: 'After [creating a Zulip bot](https://zulipchat.com/help/add-a-bot-or-integration), you can retrieve its username by going to Settings > Your bots > Active bots.'
+        },
+        {
             key: 'api_key',
             label: 'Bot API key',
             required: true,
@@ -45,6 +48,6 @@ module.exports = {
     test: testAuth,
 
     connectionLabel: (z, bundle) => {
-        return bundle.inputData.bot_name;
+        return bundle.inputData.full_name;
     }
 };

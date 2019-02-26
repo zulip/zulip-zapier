@@ -1,17 +1,6 @@
-
 const authentication = require('./authentication');
 const stream_message = require('./creates/stream_message');
 const private_message = require('./creates/private_message');
-
-// Include the API key on all outbound requests.
-// This function runs before each request is sent out.
-const includeApiKey = (request, z, bundle) => {
-    if (bundle.authData.api_key) {
-        request.params = request.params || {};
-        request.params.api_key = bundle.authData.api_key;
-    }
-    return request;
-};
 
 const App = {
     // This is just shorthand to reference the installed dependencies
@@ -22,7 +11,6 @@ const App = {
     authentication: authentication,
 
     beforeRequest: [
-        includeApiKey
     ],
 
     afterResponse: [

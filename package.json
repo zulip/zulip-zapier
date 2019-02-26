@@ -19,7 +19,8 @@
         "nock": "^10.0.6",
         "npm": "^6.8.0",
         "zapier-platform-cli": "^7.6.1",
-        "zapier-platform-core": "7.6.1"
+        "zapier-platform-core": "7.6.1",
+        "zulip-js": "^2.0.5"
     },
     "devDependencies": {
         "eslint": "^5.12.1",

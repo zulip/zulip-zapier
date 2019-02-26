@@ -17,7 +17,8 @@ describe('creates', () => {
         const bundle = {
             authData: {
                 api_key: 'secret',
-                domain: 'https://yourzulipsubdomain.zulipchat.com/',
+                domain: 'https://yourzulipsubdomain.zulipchat.com/api/v1',
+                username: 'zapierbot@zulip.com'
             },
             inputData: {
                 stream: 'test',
@@ -28,7 +29,7 @@ describe('creates', () => {
 
         // mocks the next request that matches this url and querystring
         nock('https://yourzulipsubdomain.zulipchat.com')
-            .post('/api/v1/external/zapier?stream=test&api_key=secret')
+            .post('/api/v1/messages')
             .reply(200, { result: 'success', msg: '' });
 
         appTester(App.creates.stream_message.operation.perform, bundle)
@@ -46,16 +47,17 @@ describe('creates', () => {
             authData: {
                 api_key: 'secret',
                 domain: 'https://yourzulipsubdomain.zulipchat.com/',
+                username: 'zapierbot@zulip.com'
             },
             inputData: {
-                to: ['iago@zulip.com', 'cordelia@zulip.com'],
+                recipients: ['iago@zulip.com', 'cordelia@zulip.com'],
                 content: 'Sample content'
             }
         };
 
         // mocks the next request that matches this url and querystring
         nock('https://yourzulipsubdomain.zulipchat.com')
-            .post('/api/v1/external/zapier?api_key=secret')
+            .post('/api/v1/messages')
             .reply(200, { result: 'success', msg: '' });
 
         appTester(App.creates.private_message.operation.perform, bundle)

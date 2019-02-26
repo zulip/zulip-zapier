@@ -1,4 +1,5 @@
-const sanitizeZulipURL = require('../util.js').sanitizeZulipURL;
+const zulip = require('zulip-js');
+const sanitize = require('../util.js').sanitizeZulipURL;
 
 module.exports = {
     key: 'stream_message',
@@ -31,30 +32,27 @@ module.exports = {
         ],
 
         perform: (z, bundle) => {
-            sanitizeZulipURL(bundle);
-            const promise = z.request({
-                url: 'https://{{bundle.authData.domain}}/api/v1/external/zapier',
-                method: 'POST',
-                body: JSON.stringify({
-                    type: 'stream',
-                    content: bundle.inputData.content,
-                    topic: bundle.inputData.topic
-                }),
-                params: {
-                    stream: bundle.inputData.stream
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'ZapierZulipApp'
-                }
-            });
+            const params = {
+                type: 'stream',
+                client: 'ZulipZapierApp',
+                to: bundle.inputData.stream,
+                content: bundle.inputData.content,
+                topic: bundle.inputData.topic
+            };
 
-            return promise.then((response) => {
-                const parsed_response = JSON.parse(response.content);
-                if (response.status !== 200) {
-                    throw new Error(parsed_response.msg);
-                }
-                return parsed_response;
+            const config = {
+                realm: sanitize(bundle.authData.domain),
+                username: bundle.authData.username,
+                apiKey: bundle.authData.api_key
+            };
+
+            return zulip(config).then((client) => {
+                return client.messages.send(params).then((response) => {
+                    if (response.result !== 'success') {
+                        throw new Error(response.msg);
+                    }
+                    return response;
+                });
             });
         },
 
