@@ -50,7 +50,7 @@ describe('creates', () => {
                 username: 'zapierbot@zulip.com'
             },
             inputData: {
-                recipients: ['iago@zulip.com', 'cordelia@zulip.com'],
+                recipients: [1, 3],
                 content: 'Sample content'
             }
         };
