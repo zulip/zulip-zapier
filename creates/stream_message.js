@@ -1,5 +1,6 @@
 const zulip = require('zulip-js');
 const sanitize = require('../util.js').sanitizeZulipURL;
+const populateStreams = require('./custom_fields.js').populateStreams;
 
 module.exports = {
     key: 'stream_message',
@@ -11,12 +12,7 @@ module.exports = {
 
     operation: {
         inputFields: [
-            {
-                key: 'stream',
-                required: true,
-                type: 'string',
-                label: 'Stream'
-            },
+            populateStreams,
             {
                 key: 'topic',
                 required: true,
@@ -32,10 +28,11 @@ module.exports = {
         ],
 
         perform: (z, bundle) => {
+            const streamID = parseInt(bundle.inputData.stream, 10);
             const params = {
                 type: 'stream',
                 client: 'ZulipZapierApp',
-                to: bundle.inputData.stream,
+                to: JSON.stringify([streamID]),
                 content: bundle.inputData.content,
                 topic: bundle.inputData.topic
             };

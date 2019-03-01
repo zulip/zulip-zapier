@@ -21,7 +21,7 @@ describe('creates', () => {
                 username: 'zapierbot@zulip.com'
             },
             inputData: {
-                stream: 'test',
+                stream: 2,
                 topic: 'Sample topic',
                 content: 'Sample content'
             }
