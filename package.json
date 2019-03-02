@@ -23,7 +23,7 @@
         "zulip-js": "^2.0.5"
     },
     "devDependencies": {
-        "eslint": "^5.12.1",
+        "eslint": "^5.15.0",
         "mocha": "^5.2.0",
         "should": "^13.2.0"
     }
