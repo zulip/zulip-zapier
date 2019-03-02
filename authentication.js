@@ -31,17 +31,17 @@ module.exports = {
         },
         {
             key: 'username',
-            label: 'Bot username',
+            label: 'Bot username or email',
             type: 'string',
             required: true,
-            helpText: 'After [creating a Zulip bot](https://zulipchat.com/help/add-a-bot-or-integration), you can retrieve its username by going to Settings > Your bots > Active bots.'
+            helpText: 'After [creating a Zulip bot](https://zulipchat.com/help/add-a-bot-or-integration), you can retrieve its username and API key by going to Settings > Your bots > Active bots.'
         },
         {
             key: 'api_key',
             label: 'Bot API key',
             required: true,
             type: 'string',
-            helpText: 'After [creating a Zulip bot](https://zulipchat.com/help/add-a-bot-or-integration), you can retrieve its API key by following [these instructions](https://zulipchat.com/api/api-keys#get-a-bots-api-key).'
+            helpText: 'After [creating a Zulip bot](https://zulipchat.com/help/add-a-bot-or-integration), you can retrieve its username and API key by going to Settings > Your bots > Active bots.'
         }
     ],
 
