@@ -1,7 +1,8 @@
 const zulip = require('zulip-js');
 const sanitize = require('../util.js').sanitizeZulipURL;
+const webhookBotError = require('../util.js').webhookBotErrorMessage;
 
-const populateUsers = (z, bundle) => {
+const getUsers = (z, bundle) => {
     const config = {
         realm: sanitize(bundle.authData.domain),
         username: bundle.authData.username,
@@ -9,13 +10,19 @@ const populateUsers = (z, bundle) => {
     };
 
     return zulip(config).then((client) => {
-        return client.users.retrieve().then((response) => {
-            if (response.result !== 'success') {
-                throw new Error(response.msg);
+        return client.users.retrieve().then((res) => {
+            // If the requesting user can't authenticate because they are
+            // an incoming webhook bot, we should simply return the response
+            // so that getRecipientField can handle it.
+            if (res.result !== 'success' && res.msg === webhookBotError) {
+                return res;
+            }
+            else if (res.result !== 'success' && res.msg !== webhookBotError) {
+                throw new Error(res.msg);
             }
 
             var choices = {};
-            response.members.forEach((user) => {
+            res.members.forEach((user) => {
                 if (!user.is_bot) {
                     choices[user.user_id] = user.full_name;
                 }
@@ -31,6 +38,25 @@ const populateUsers = (z, bundle) => {
 
             return field;
         });
+    });
+};
+
+const getRecipientField = (z, bundle) => {
+    const defaultField = {
+        key: 'recipients',
+        required: true,
+        type: 'string',
+        label: 'Recipient(s)',
+        helpText: 'Email addresses of recipient Zulip users',
+        list: true
+    };
+
+    return getUsers(z, bundle).then((res) => {
+        if (res.result !== 'success' && res.msg === webhookBotError) {
+            return defaultField;
+        }
+
+        return res;
     });
 };
 
@@ -70,6 +96,6 @@ const populateStreams = (z, bundle) => {
 };
 
 module.exports = {
-    'populateUsers': populateUsers,
+    'getRecipientField': getRecipientField,
     'populateStreams': populateStreams
 };
