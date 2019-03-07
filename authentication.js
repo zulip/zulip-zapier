@@ -1,7 +1,8 @@
 const zulip = require('zulip-js');
 const sanitize = require('./util.js').sanitizeZulipURL;
+const webhookBotError = require('./util.js').webhookBotErrorMessage;
 
-const testAuth = (z, bundle) => {
+const genericBotAuth = (z, bundle) => {
     const config = {
         realm: sanitize(bundle.authData.domain),
         username: bundle.authData.username,
@@ -9,12 +10,44 @@ const testAuth = (z, bundle) => {
     };
 
     return zulip(config).then((client) => {
-        return client.users.me.getProfile().then((response) => {
-            if (response.result !== 'success') {
-                throw new Error(response.msg);
+        return client.users.me.getProfile().then((res) => {
+            // If the requesting user can't authenticate because they are
+            // an incoming webhook bot, we should simply return the response
+            // so that incomingWebhookBotAuth can handle it.
+            if (res.result !== 'success' && res.msg !== webhookBotError) {
+                throw new Error(res.msg);
             }
-            return response;
+            return res;
         });
+    });
+};
+
+const incomingWebhookBotAuth = (z, bundle) => {
+    bundle.authData.domain = sanitize(bundle.authData.domain);
+    const url = '{{bundle.authData.domain}}/api/v1/external/zapier?api_key={{bundle.authData.api_key}}';
+    const payload = {'type': 'auth'};
+    const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    };
+
+    return z.request(url, options).then((response) => {
+        const parsed_response = JSON.parse(response.content);
+        if (response.status !== 200) {
+            throw new Error(parsed_response.msg);
+        }
+        return parsed_response;
+    });
+};
+
+const testAuth = (z, bundle) => {
+    return genericBotAuth(z, bundle).then((res1) => {
+        if (res1.result !== 'success' && res1.msg === webhookBotError) {
+            return incomingWebhookBotAuth(z, bundle).then((res2) => res2);
+        }
+
+        return res1;
     });
 };
 
