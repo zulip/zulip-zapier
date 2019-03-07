@@ -1,6 +1,6 @@
 const zulip = require('zulip-js');
 const sanitize = require('../util.js').sanitizeZulipURL;
-const populateUsers = require('./custom_fields.js').populateUsers;
+const getRecipientField = require('./custom_fields.js').getRecipientField;
 
 module.exports = {
     key: 'private_message',
@@ -13,7 +13,7 @@ module.exports = {
 
     operation: {
         inputFields: [
-            populateUsers,
+            getRecipientField,
             {
                 key: 'content',
                 required: true,
@@ -25,8 +25,14 @@ module.exports = {
         perform: (z, bundle) => {
             const userIDs = [];
             bundle.inputData.recipients.forEach((id) => {
-                userIDs.push(parseInt(id));
+                if (!isNaN(parseInt(id))) {
+                    userIDs.push(parseInt(id));
+                }
+                else {
+                    userIDs.push(id);
+                }
             });
+
             const params = {
                 type: 'private',
                 client: 'ZulipZapierApp',

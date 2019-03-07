@@ -11,7 +11,7 @@ const appTester = zapier.createAppTester(App);
 const nock = require('nock');
 
 describe('custom fields', () => {
-    it('should return an object with user_id:user_name pairs', (done) => {
+    it('should return a custom/dynamic recipients field', (done) => {
 
         const bundle = {
             authData: {
@@ -65,6 +65,38 @@ describe('custom fields', () => {
             })
             .catch(done);
     });
+
+    it('should return the default recipients field', (done) => {
+
+        const bundle = {
+            authData: {
+                api_key: 'secret',
+                domain: 'https://yourzulipsubdomain.zulipchat.com/api/v1',
+                username: 'zapierbot@zulip.com'
+            },
+        };
+
+        const errorPayload = {
+            'msg': 'This API is not available to incoming webhook bots.',
+            'result': 'error',
+        };
+
+        // mocks the next request that matches this url and querystring
+        nock('https://yourzulipsubdomain.zulipchat.com')
+            .get('/api/v1/users')
+            .reply(400, errorPayload);
+
+        appTester(App.creates.private_message.operation.inputFields[0], bundle)
+            .then((json_response) => {
+                const helpText = 'Email addresses of recipient Zulip users';
+                json_response.type.should.eql('string');
+                json_response.helpText.should.eql(helpText);
+                json_response.should.not.have.property('choices');
+                done();
+            })
+            .catch(done);
+    });
+
     it('should return an object with stream_id:stream_name pairs', (done) => {
 
         const bundle = {
