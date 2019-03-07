@@ -12,7 +12,7 @@ const nock = require('nock');
 
 describe('authentication', () => {
 
-    it('passes authentication and returns json', (done) => {
+    it('passes generic bot authentication', (done) => {
 
         const bundle = {
             authData: {
@@ -42,12 +42,55 @@ describe('authentication', () => {
 
         appTester(App.authentication.test, bundle)
             .then((json_response) => {
-                json_response.should.have.property('msg');
+                json_response.msg.should.eql('');
                 json_response.result.should.eql('success');
-                json_response.should.have.property('full_name');
+                json_response.full_name.should.eql('Zulip Webhook Bot');
                 done();
             })
             .catch(done);
 
+    });
+
+    it('passes incoming webhook bot authentication', (done) => {
+
+        const bundle = {
+            authData: {
+                api_key: 'secret',
+                domain: 'subdomain.zulipchat.com',
+            }
+        };
+
+        const errorPayload = {
+            'msg': 'This API is not available to incoming webhook bots.',
+            'result': 'error',
+        };
+
+        const successPayload = {
+            'msg': '',
+            'result': 'success',
+            'full_name': 'Zulip Webhook Bot',
+            'email': 'bot-name@zulip.com',
+            'id': '5'
+        };
+
+        // mocks the next request that matches this url and querystring
+        nock('https://subdomain.zulipchat.com')
+            .get('/api/v1/users/me')
+            .reply(400, errorPayload);
+
+        nock('https://subdomain.zulipchat.com')
+            .post('/api/v1/external/zapier?api_key=secret', { type: 'auth' })
+            .reply(200, successPayload);
+
+        appTester(App.authentication.test, bundle)
+            .then((json_response) => {
+                json_response.msg.should.eql('');
+                json_response.result.should.eql('success');
+                json_response.full_name.should.eql('Zulip Webhook Bot');
+                json_response.email.should.eql('bot-name@zulip.com');
+                json_response.should.have.property('id');
+                done();
+            })
+            .catch(done);
     });
 });
