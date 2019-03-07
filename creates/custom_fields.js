@@ -60,7 +60,7 @@ const getRecipientField = (z, bundle) => {
     });
 };
 
-const populateStreams = (z, bundle) => {
+const getStreams = (z, bundle) => {
     const config = {
         realm: sanitize(bundle.authData.domain),
         username: bundle.authData.username,
@@ -73,13 +73,19 @@ const populateStreams = (z, bundle) => {
             include_subscribed: true,
             include_owner_subscribed: true
         };
-        return client.streams.retrieve(params).then((response) => {
-            if (response.result !== 'success') {
-                throw new Error(response.msg);
+        return client.streams.retrieve(params).then((res) => {
+            // If the requesting user can't authenticate because they are
+            // an incoming webhook bot, we should simply return the response
+            // so that getStreamField can handle it.
+            if (res.result !== 'success' && res.msg === webhookBotError) {
+                return res;
+            }
+            else if (res.result !== 'success' && res.msg !== webhookBotError) {
+                throw new Error(res.msg);
             }
 
             var choices = {};
-            response.streams.forEach((stream) => {
+            res.streams.forEach((stream) => {
                 choices[stream.stream_id] = stream.name;
             });
 
@@ -95,7 +101,24 @@ const populateStreams = (z, bundle) => {
     });
 };
 
+const getStreamField = (z, bundle) => {
+    const defaultField =  {
+        key: 'stream',
+        required: true,
+        type: 'string',
+        label: 'Stream name'
+    };
+
+    return getStreams(z, bundle).then((res) => {
+        if (res.result !== 'success' && res.msg === webhookBotError) {
+            return defaultField;
+        }
+
+        return res;
+    });
+};
+
 module.exports = {
     'getRecipientField': getRecipientField,
-    'populateStreams': populateStreams
+    'getStreamField': getStreamField
 };

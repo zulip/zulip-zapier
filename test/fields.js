@@ -97,7 +97,7 @@ describe('custom fields', () => {
             .catch(done);
     });
 
-    it('should return an object with stream_id:stream_name pairs', (done) => {
+    it('should return a custom/dynamic stream field', (done) => {
 
         const bundle = {
             authData: {
@@ -143,6 +143,36 @@ describe('custom fields', () => {
                     1: 'Denmark',
                     2: 'Rome'
                 });
+                done();
+            })
+            .catch(done);
+    });
+
+    it('should return the default stream field', (done) => {
+
+        const bundle = {
+            authData: {
+                api_key: 'secret',
+                domain: 'https://yourzulipsubdomain.zulipchat.com/api/v1',
+                username: 'zapierbot@zulip.com'
+            },
+        };
+
+        const errorPayload = {
+            'msg': 'This API is not available to incoming webhook bots.',
+            'result': 'error',
+        };
+
+        // mocks the next request that matches this url and querystring
+        nock('https://yourzulipsubdomain.zulipchat.com')
+            .get('/api/v1/streams?include_public=true&include_subscribed=true&include_owner_subscribed=true')
+            .reply(400, errorPayload);
+
+        appTester(App.creates.stream_message.operation.inputFields[0], bundle)
+            .then((json_response) => {
+                json_response.type.should.eql('string');
+                json_response.label.should.eql('Stream name');
+                json_response.should.not.have.property('choices');
                 done();
             })
             .catch(done);
