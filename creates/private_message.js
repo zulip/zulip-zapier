@@ -8,7 +8,7 @@ module.exports = {
     noun: 'Private message',
     display: {
         label: 'Send a Private Message',
-        description: 'Sends a private message to one or more Zulip users'
+        description: 'Send a private or group message'
     },
 
     operation: {

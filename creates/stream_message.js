@@ -7,7 +7,7 @@ module.exports = {
     noun: 'Stream message',
     display: {
         label: 'Send a Stream Message',
-        description: 'Sends a message to a given Zulip stream'
+        description: 'Send a message to a Zulip stream'
     },
 
     operation: {
