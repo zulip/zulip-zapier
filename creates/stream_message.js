@@ -1,5 +1,6 @@
 const zulip = require('zulip-js');
 const sanitize = require('../util.js').sanitizeZulipURL;
+const constructStreamMessageURL = require('../util.js').constructStreamMessageURL;
 const getStreamField = require('./custom_fields.js').getStreamField;
 
 module.exports = {
@@ -52,6 +53,15 @@ module.exports = {
                     if (response.result !== 'success') {
                         throw new Error(response.msg);
                     }
+
+                    const data = {
+                        realm: config.realm,
+                        stream: bundle.inputData.stream,
+                        topic: bundle.inputData.topic,
+                        id: response.id
+                    };
+                    response.message_url = constructStreamMessageURL(data);
+
                     return response;
                 });
             });
@@ -62,7 +72,9 @@ module.exports = {
         // fallback to this hard-coded sample.
         sample: {
             result: 'success',
-            msg: ''
+            msg: '',
+            id: 36,
+            message_url: 'https://zulip.yourcompany.org/#narrow/stream/announce/topic/Announcement/near/36'
         },
     }
 };
