@@ -20,8 +20,14 @@ const constructStreamMessageURL = (data) => {
     return encodeURI(url);
 };
 
+const constructPrivateMessageURL = (data) => {
+    const url = `${data.realm}/#narrow/id/${data.id}`;
+    return encodeURI(url);
+};
+
 module.exports = {
     'sanitizeZulipURL': sanitizeZulipURL,
     'webhookBotErrorMessage': webhookBotErrorMessage,
-    'constructStreamMessageURL': constructStreamMessageURL
+    'constructStreamMessageURL': constructStreamMessageURL,
+    'constructPrivateMessageURL': constructPrivateMessageURL
 };

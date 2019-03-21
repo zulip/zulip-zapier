@@ -1,5 +1,6 @@
 const zulip = require('zulip-js');
 const sanitize = require('../util.js').sanitizeZulipURL;
+const constructPrivateMessageURL = require('../util.js').constructPrivateMessageURL;
 const getRecipientField = require('./custom_fields.js').getRecipientField;
 
 module.exports = {
@@ -51,6 +52,13 @@ module.exports = {
                     if (response.result !== 'success') {
                         throw new Error(response.msg);
                     }
+
+                    const data = {
+                        realm: config.realm,
+                        id: response.id
+                    };
+                    response.message_url = constructPrivateMessageURL(data);
+
                     return response;
                 });
             });
@@ -61,7 +69,9 @@ module.exports = {
         // fallback to this hard-coded sample.
         sample: {
             result: 'success',
-            msg: ''
+            msg: '',
+            id: 36,
+            message_url: 'https://yourzulipsubdomain.zulipchat.com/#narrow/id/36'
         },
     }
 };

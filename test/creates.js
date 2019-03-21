@@ -64,15 +64,24 @@ describe('creates', () => {
             }
         };
 
+        const sample = {
+            result: 'success',
+            msg: '',
+            id: 36,
+            message_url: 'https://yourzulipsubdomain.zulipchat.com/#narrow/id/36'
+        };
+
         // mocks the next request that matches this url and querystring
         nock('https://yourzulipsubdomain.zulipchat.com')
             .post('/api/v1/messages')
-            .reply(200, { result: 'success', msg: '' });
+            .reply(200, sample);
 
         appTester(App.creates.private_message.operation.perform, bundle)
             .then((json_response) => {
                 json_response.should.have.property('msg');
+                json_response.should.have.property('id');
                 json_response.result.should.eql('success');
+                json_response.should.have.property('message_url');
                 done();
             })
             .catch(done);
