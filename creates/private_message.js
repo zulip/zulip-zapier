@@ -1,7 +1,6 @@
 const zulip = require('zulip-js');
 const sanitize = require('../util.js').sanitizeZulipURL;
 const constructPrivateMessageURL = require('../util.js').constructPrivateMessageURL;
-const getRecipientField = require('./custom_fields.js').getRecipientField;
 
 module.exports = {
     key: 'private_message',
@@ -14,7 +13,14 @@ module.exports = {
 
     operation: {
         inputFields: [
-            getRecipientField,
+            {
+                key: 'recipients',
+                required: true,
+                type: 'string',
+                label: 'Recipient(s)',
+                helpText: 'Email addresses of recipient Zulip users',
+                list: true
+            },
             {
                 key: 'content',
                 required: true,
