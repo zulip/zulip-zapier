@@ -31,7 +31,7 @@ module.exports = {
         perform: (z, bundle) => {
             let stream = bundle.inputData.stream;
             if (!isNaN(parseInt(stream, 10))) {
-                stream = JSON.stringify([parseInt(stream, 10)]);
+                stream = z.JSON.stringify([parseInt(stream, 10)]);
             }
 
             const params = {

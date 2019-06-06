@@ -29,11 +29,11 @@ const incomingWebhookBotAuth = (z, bundle) => {
     const options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload)
+        body: z.JSON.stringify(payload)
     };
 
     return z.request(url, options).then((response) => {
-        const parsed_response = JSON.parse(response.content);
+        const parsed_response = z.JSON.parse(response.content);
         if (response.status !== 200) {
             throw new Error(parsed_response.msg);
         }

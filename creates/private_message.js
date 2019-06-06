@@ -43,7 +43,7 @@ module.exports = {
             const params = {
                 type: 'private',
                 client: 'ZulipZapierApp',
-                to: JSON.stringify(userIDs),
+                to: z.JSON.stringify(userIDs),
                 content: bundle.inputData.content
             };
 
