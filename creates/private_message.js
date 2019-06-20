@@ -18,7 +18,7 @@ module.exports = {
                 required: true,
                 type: 'string',
                 label: 'Recipient(s)',
-                helpText: 'Email addresses of recipient Zulip users',
+                helpText: 'Email addresses of recipients. Use the **+** on the far right to add more than one.',
                 list: true
             },
             {
