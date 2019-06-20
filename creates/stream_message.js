@@ -33,6 +33,10 @@ module.exports = {
             if (!isNaN(parseInt(stream, 10))) {
                 stream = z.JSON.stringify([parseInt(stream, 10)]);
             }
+            else if (stream.charAt(0) === '#')
+            {
+                stream = stream.substr(1);
+            }
 
             const params = {
                 type: 'stream',
