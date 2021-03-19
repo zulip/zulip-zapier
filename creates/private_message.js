@@ -18,7 +18,7 @@ module.exports = {
                 required: true,
                 type: 'string',
                 label: 'Recipient(s)',
-                helpText: 'Email addresses of recipients. Use the **+** on the far right to add more than one.',
+                helpText: 'Email addresses of recipients.',
                 list: true
             },
             {
