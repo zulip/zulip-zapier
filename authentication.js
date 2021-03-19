@@ -60,7 +60,7 @@ module.exports = {
             label: 'Zulip URL',
             type: 'string',
             required: true,
-            helpText: 'It may look like subdomain.zulipchat.com, or zulip.your-company.com.'
+            helpText: 'It may look like subdomain.zulipchat.com, or zulip.your-company.com. For more details, you can visit [the official Zulip documentation](https://zulip.com/integrations/doc/zapier).'
         },
         {
             key: 'username',
