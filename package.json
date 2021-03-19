@@ -1,11 +1,11 @@
 {
-    "name": "zapier-platform-example-app-custom-auth",
-    "version": "1.0.0",
-    "description": "An example app for the Zapier platform.",
-    "repository": "zapier/zapier-platform-example-app-custom-auth",
-    "homepage": "https://zapier.com/",
-    "author": "Bryan Helmig <bryan@zapier.com>",
-    "license": "BSD-3-Clause",
+    "name": "Zulip",
+    "version": "1.0.1",
+    "description": "Zulip provides a rich chat interface for real-time and asynchronous team communication.",
+    "repository": "https://github.com/zulip/zulip-zapier",
+    "homepage": "https://zulipchat.com/",
+    "author": "",
+    "license": "Apache-2.0",
     "main": "index.js",
     "scripts": {
         "test": "mocha --recursive",
