@@ -1,6 +1,6 @@
 {
     "name": "Zulip",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Zulip provides a rich chat interface for real-time and asynchronous team communication.",
     "repository": "https://github.com/zulip/zulip-zapier",
     "homepage": "https://zulipchat.com/",
@@ -19,7 +19,7 @@
         "nock": "^10.0.6",
         "npm": "^6.9.0",
         "zapier-platform-cli": "^8.2.1",
-        "zapier-platform-core": "8.1.0",
+        "zapier-platform-core": "11.0.1",
         "zulip-js": "^2.0.6"
     },
     "devDependencies": {
